@@ -1,0 +1,12 @@
+.bannerImage {
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 960px) {
+  .bannerImage {
+    height: 90vh;
+    object-fit: cover;
+    object-position: top;
+  }
+}
