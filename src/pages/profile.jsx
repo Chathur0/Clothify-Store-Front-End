@@ -112,16 +112,28 @@ function CustomerProfile() {
           }
         );
         if (response.ok) {
-          alert("Account deleted successfully.");
+          Swal.fire({
+            title: "Deleted!",
+            text: "Account deleted successfully.",
+            icon: "success"
+          });
           localStorage.removeItem("jwtToken");
           navigate("/");
         } else {
           console.error("Failed to delete account.");
-          alert("There was an issue deleting your account. Please try again.");
+          Swal.fire({
+            title: "Error!",
+            text: "There was an issue deleting your account. Please try again.",
+            icon: "error"
+          });
         }
       } catch (error) {
         console.error("Error during delete request:", error);
-        alert("An error occurred while deleting your account.");
+        Swal.fire({
+          title: "Error!",
+          text: "An error occurred while deleting your account.",
+          icon: "error"
+        });
       }
     }
   };

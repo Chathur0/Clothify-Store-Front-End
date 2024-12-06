@@ -11,7 +11,17 @@ function Order() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [status, setStatus] = useState(null);
-
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
@@ -39,7 +49,7 @@ function Order() {
           const errorData = await response.json();
           if (errorData.error === "Token has expired") {
             Swal.fire({
-                icon:"error",
+              icon: "error",
               title: "Session expired",
               text: "Logging out...",
               timer: 2000,
@@ -100,17 +110,23 @@ function Order() {
   }, [id, navigate]);
 
   const handleStatusChange = async (newStatus) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to change the order status to ${
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `you want to change the order status to ${
         newStatus === "1"
           ? "Pending"
           : newStatus === "2"
           ? "On Board"
           : "Completed"
-      }?`
-    );
+      }?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "#dc3545",
+      cancelButtonText: "Cancel",
+    });
 
-    if (!confirmed) {
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -130,9 +146,16 @@ function Order() {
 
       if (response.ok) {
         setStatus(newStatus);
-        alert("Order status updated successfully");
+        Toast.fire({
+          icon: "success",
+          title: "Order status updated successfully",
+        });
       } else {
-        alert("Failed to update status");
+        Swal.fire({
+          icon: "error",
+          text: "Failed to update status",
+          title: "Error!",
+        });
       }
     } catch (error) {
       console.error("Error updating status:", error);
@@ -195,7 +218,7 @@ function Order() {
                   <tr key={index}>
                     <td>
                       <img
-                        src={`http://localhost:8080/${product.image}`}
+                        src={product.image}
                         alt={product.name}
                         className="img-thumbnail"
                         style={{ width: "100px" }}

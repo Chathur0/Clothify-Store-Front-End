@@ -8,6 +8,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import styles from "./alertStyles.module.css";
 
 Modal.setAppElement("#root");
 
@@ -24,7 +25,17 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [showCart, setShowCart] = useState(false);
   const { cartCount, addToCart } = useCart();
-
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
   const handleImageView = () => {
     setModalIsOpen(true);
   };
@@ -52,10 +63,16 @@ const ProductDetails = () => {
       })
     );
     formDataToSend.append("image", selectedImage || null);
-    const confirmChange = window.confirm(
-      "Are you sure you want to update the Product?"
-    );
-    if (confirmChange) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "you want to update the Product?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "#dc3545",
+      cancelButtonText: "Cancel",
+    });
+    if (result.isConfirmed) {
       try {
         const response = await fetch("http://localhost:8080/change-product", {
           method: "PUT",
@@ -66,9 +83,11 @@ const ProductDetails = () => {
         });
 
         if (response.ok) {
-          alert("Product updated successfully!");
+          Toast.fire({
+            icon: "success",
+            title: "Product updated successfully!",
+          });
           setEdit(false);
-          window.location.reload();
         } else {
           console.error("Error updating product:", response.status);
         }
@@ -87,9 +106,13 @@ const ProductDetails = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert(
-          "Image size should not exceed 5MB. Please upload a smaller file."
-        );
+        Swal.fire({
+          text: "File size should not exceed 5MB!",
+          icon: "warning",
+          customClass: {
+            popup: styles.dangerBackground,
+          },
+        });
         setSelectedImage(null);
       } else {
         setSelectedImage(file);
@@ -124,7 +147,7 @@ const ProductDetails = () => {
           const errorData = await response.json();
           if (errorData.error === "Token has expired") {
             Swal.fire({
-              icon:"error",
+              icon: "error",
               title: "Session expired",
               text: "Logging out...",
               timer: 2000,
@@ -173,10 +196,17 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
-    if (confirmDelete) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "you want to delete the Product?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "#dc3545",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
       try {
         const response = await fetch(
           `http://localhost:8080/delete-product/${id}`,
@@ -188,15 +218,27 @@ const ProductDetails = () => {
           }
         );
         if (response.ok) {
-          alert((await response.text()));
+          Swal.fire({
+            icon: "success",
+            title: "Successfully!",
+            text: `${await response.text()}`,
+          });
           navigate(-1);
         } else {
           console.error("Error deleting item:", response.status);
-          alert("Failed to delete the item.");
+          Swal.fire({
+            icon: "error",
+            title: "Failed",
+            text: "Failed to delete the item.",
+          });
         }
       } catch (error) {
         console.error("Error during delete request:", error);
-        alert("An error occurred while deleting the item.");
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: "An error occurred while deleting the item.",
+        });
       }
     }
   };

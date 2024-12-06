@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
+import styles from "./alertStyles.module.css";
+
 function AddProduct() {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,6 +17,19 @@ function AddProduct() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
@@ -46,7 +61,7 @@ function AddProduct() {
           const errorData = await response.json();
           if (errorData.error === "Token has expired") {
             Swal.fire({
-              icon:"error",
+              icon: "error",
               title: "Session expired",
               text: "Logging out...",
               timer: 2000,
@@ -56,7 +71,7 @@ function AddProduct() {
               willClose: () => {
                 localStorage.removeItem("jwtToken");
                 setIsLoggedIn(false);
-                navigate("/login")
+                navigate("/login");
               },
             });
           } else {
@@ -83,27 +98,22 @@ function AddProduct() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-  if (file && file.size > 5 * 1024 * 1024) {
-    alert("File size should not exceed 5MB!");
-    e.target.value = "";
-    return;
-  }
-    setFormData((prevData) => ({ ...prevData, image: file}));
+    if (file && file.size > 5 * 1024 * 1024) {
+      Swal.fire({
+        text: "File size should not exceed 5MB!",
+        icon: "warning",
+        customClass: {
+          popup: styles.dangerBackground,
+        },
+      });
+      e.target.value = "";
+      return;
+    }
+    setFormData((prevData) => ({ ...prevData, image: file }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !formData.name ||
-      !formData.description ||
-      !formData.category ||
-      !formData.price ||
-      !formData.qty
-    ) {
-      setError("All fields are required!");
-      return;
-    }
-    setError("");
     const formDataToSend = new FormData();
     formDataToSend.append(
       "product",
@@ -116,25 +126,35 @@ function AddProduct() {
       })
     );
     formDataToSend.append("image", formData.image);
-    
+
     try {
-        const response = await fetch("http://localhost:8080/add-product", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-          body: formDataToSend,
+      const response = await fetch("http://localhost:8080/add-product", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        Toast.fire({
+          icon: "success",
+          title: "Product added successfully!",
         });
-  
-        if (response.ok) {
-          alert("Product added successfully!");
-          location.reload();
-        } else {
-          alert(`Error: "Something went wrong"}`);
-        }
-      } catch (error) {
-        alert("An error occurred while submitting the product.");
+        location.reload();
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: `${(await response.json()).error}`,
+        });
       }
+    } catch (error) {
+      Swal.fire({
+        text: "An error occurred while submitting the product.",
+        icon: "error",
+        timer: 1500
+      });
+    }
   };
 
   return (
@@ -190,7 +210,9 @@ function AddProduct() {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>Select Category</option>
+                <option value="" disabled>
+                  Select Category
+                </option>
                 <option value="1">Men</option>
                 <option value="2">Women</option>
                 <option value="3">Kids</option>

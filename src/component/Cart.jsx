@@ -1,8 +1,20 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CartPopup = ({ show, onClose }) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
   const { cart,cartCount, updateCartQty, removeFromCart } = useCart();
   const navigate = useNavigate();
   if (!show) return null;
@@ -11,7 +23,10 @@ const CartPopup = ({ show, onClose }) => {
     if (newQty <= 0) {
       removeFromCart(id);
     } else if (newQty > availableQty) {
-      alert(`Only ${availableQty} items are available.`);
+      Toast.fire({
+        icon: "warning",
+        text: `Only ${availableQty} items are available.`
+      });
     } else {
       updateCartQty(id, newQty);
     }

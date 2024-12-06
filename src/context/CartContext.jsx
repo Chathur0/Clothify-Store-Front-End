@@ -1,7 +1,18 @@
 import React, { createContext, useState, useContext } from "react";
+import Swal from "sweetalert2";
 
 const CartContext = createContext();
-
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  },
+});
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
@@ -15,28 +26,34 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product, qty) => {
     setCart((prev) => {
       const existingProduct = prev.find((item) => item.id === product.id);
-      
+
       if (existingProduct) {
         if (existingProduct.sQty + qty > product.qty) {
-          alert(`Only ${product.qty} items are available.`);
+          Toast.fire({
+            icon: "question",
+            text: `Only ${product.qty} items are available.`
+          });
           return prev;
         }
         const updatedCart = prev.map((item) =>
           item.id === product.id ? { ...item, sQty: item.sQty + qty } : item
         );
         const newCartCount = calculateCartCount(updatedCart);
-        setCartCount(newCartCount);  
+        setCartCount(newCartCount);
         return updatedCart;
       }
 
       if (qty > product.qty) {
-        alert(`Only ${product.qty} items are available.`);
+        Toast.fire({
+          icon: "question",
+          text: `Only ${product.qty} items are available.`
+        });
         return prev;
       }
 
       const newCart = [...prev, { ...product, sQty: qty }];
       const newCartCount = calculateCartCount(newCart);
-      setCartCount(newCartCount);  
+      setCartCount(newCartCount);
       return newCart;
     });
   };
@@ -47,7 +64,7 @@ export const CartProvider = ({ children }) => {
         item.id === id ? { ...item, sQty: newQty } : item
       );
       const newCartCount = calculateCartCount(updatedCart);
-      setCartCount(newCartCount);  
+      setCartCount(newCartCount);
       return updatedCart;
     });
   };
@@ -56,7 +73,7 @@ export const CartProvider = ({ children }) => {
     setCart((prev) => {
       const updatedCart = prev.filter((item) => item.id !== id);
       const newCartCount = calculateCartCount(updatedCart);
-      setCartCount(newCartCount);  
+      setCartCount(newCartCount);
       return updatedCart;
     });
   };
@@ -65,7 +82,16 @@ export const CartProvider = ({ children }) => {
     setCartCount(0);
   };
   return (
-    <CartContext.Provider value={{ cart, cartCount, addToCart, updateCartQty, removeFromCart,clearCart  }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        cartCount,
+        addToCart,
+        updateCartQty,
+        removeFromCart,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

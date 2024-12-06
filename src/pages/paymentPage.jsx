@@ -11,7 +11,17 @@ const PaymentPage = () => {
   const { clearCart } = useCart();
   const totalCost = cart.reduce((acc, item) => acc + item.sQty * item.price, 0);
   const navigate = useNavigate();
-
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
   useEffect(() => {
     if (cart.length === 0) {
       navigate("/");
@@ -86,20 +96,29 @@ const PaymentPage = () => {
         });
 
         if (response.ok) {
-          alert("Payment Successful! " + (await response.text()));
+          Toast.fire({
+            icon: "success",
+            title: `Payment Successful! ${await response.text()}`,
+          });
           clearCart();
           navigate("/");
         } else {
           console.error("Error from server:", response.status);
-          alert(
-            "Payment Successful, but there was an issue saving your order."
-          );
+          Swal.fire({
+            icon: "warning",
+            text:"Contact Us",
+            title: "Payment Successful, but there was an issue saving your order.",
+            footer: "+94 - 000000000"
+          });
         }
       } catch (error) {
         console.error("Error sending data to backend:", error);
-        alert(
-          "Payment Successful, but an error occurred while processing your order."
-        );
+        Swal.fire({
+          icon: "warning",
+          text:"Contact Us",
+          title: "Payment Successful, but an error occurred while processing your order.",
+          footer: "+94 - 000000000"
+        });
       }
     };
 
