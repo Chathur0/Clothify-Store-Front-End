@@ -7,7 +7,6 @@ function navigationBar(props) {
           <Link to={"/"} className="navbar-brand fw-bolder fs-1">
             Clothify Store
           </Link>
-
           <button
             className="navbar-toggler"
             type="button"
@@ -19,7 +18,6 @@ function navigationBar(props) {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav mx-auto">
               <Link
