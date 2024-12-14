@@ -20,7 +20,7 @@ function App() {
     <CartProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="Clothify-Store-Front-End/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<CustomerProfile />} />
