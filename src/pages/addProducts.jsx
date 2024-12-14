@@ -18,6 +18,8 @@ function AddProduct() {
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
 
+  const basePath = "/Clothify-Store-Front-End"; 
+
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -35,7 +37,7 @@ function AddProduct() {
 
     if (!token) {
       setIsLoggedIn(false);
-      navigate("/login");
+      navigate(`${basePath}/login`);
     }
 
     const fetchUserRole = async () => {
@@ -50,8 +52,8 @@ function AddProduct() {
 
         if (response.ok) {
           const responseData = await response.json();
-          if (responseData.role != "admin") {
-            navigate("Clothify-Store-Front-End/");
+          if (responseData.role !== "admin") {
+            navigate(`${basePath}/`);
             return;
           }
           setUserRole(responseData.role);
@@ -71,7 +73,7 @@ function AddProduct() {
               willClose: () => {
                 localStorage.removeItem("jwtToken");
                 setIsLoggedIn(false);
-                navigate("/login");
+                navigate(`${basePath}/login`);
               },
             });
           } else {
@@ -152,7 +154,7 @@ function AddProduct() {
       Swal.fire({
         text: "An error occurred while submitting the product.",
         icon: "error",
-        timer: 1500
+        timer: 1500,
       });
     }
   };

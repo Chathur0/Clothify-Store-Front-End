@@ -11,6 +11,7 @@ function Order() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [status, setStatus] = useState(null);
+  const basePath = "/Clothify-Store-Front-End";
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -79,7 +80,7 @@ function Order() {
     const fetchOrderDetails = async () => {
       const token = localStorage.getItem("jwtToken");
       if (!token) {
-        navigate("/login");
+        navigate(`${basePath}/login`);
         return;
       }
       try {
@@ -97,7 +98,7 @@ function Order() {
           setStatus(data.status);
         } else if (response.status === 401) {
           localStorage.clear();
-          navigate("/login");
+          navigate(`${basePath}/login`);
         }
       } catch (err) {
         console.error(err);

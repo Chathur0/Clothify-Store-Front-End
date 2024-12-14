@@ -12,10 +12,11 @@ function CustomerProfile() {
   const [profileImage, setProfileImage] = useState("");
   const [orderHistory, setOrderHistory] = useState(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const basePath = "/Clothify-Store-Front-End";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {
-      navigate("Clothify-Store-Front-End/");
+      navigate(`${basePath}/`);
       return;
     }
     const fetchUserRole = async () => {
@@ -87,6 +88,7 @@ function CustomerProfile() {
     };
     fetchCustomerDetails();
   }, []);
+console.log(customer);
 
   const handleDeleteAccount = async () => {
     const result = await Swal.fire({
@@ -116,7 +118,7 @@ function CustomerProfile() {
             icon: "success",
           });
           localStorage.removeItem("jwtToken");
-          navigate("/");
+          navigate(`${basePath}/`);
         } else {
           console.error("Failed to delete account.");
           Swal.fire({
@@ -137,7 +139,7 @@ function CustomerProfile() {
   };
 
   const handleEditProfile = () => {
-    navigate("/edit-profile", { state: { customer } });
+    navigate(`${basePath}/edit-profile`, { state: { customer } });
   };
 
   useEffect(() => {
@@ -145,7 +147,7 @@ function CustomerProfile() {
       const token = localStorage.getItem("jwtToken");
 
       if (!token) {
-        navigate("Clothify-Store-Front-End/");
+        navigate(`${basePath}/`);
         return;
       }
       if (customer) {
@@ -301,7 +303,7 @@ function CustomerProfile() {
                           <button
                             className="btn btn-outline-primary rounded-5"
                             onClick={() => {
-                              navigate("/order", { state: order.orderId });
+                              navigate(`${basePath}/order`, { state: order.orderId });
                             }}
                           >
                             Details

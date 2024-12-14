@@ -7,7 +7,7 @@ function EditProfile() {
   const location = useLocation();
   const navigate = useNavigate();
   const customer = location.state?.customer;
-
+  const basePath = "/Clothify-Store-Front-End";
   const [newImage, setNewImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(
     customer?.image || "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
@@ -37,12 +37,12 @@ function EditProfile() {
 
   useEffect(() => {
     if (!localStorage.getItem("jwtToken")) {
-      navigate("Clothify-Store-Front-End/");
+      navigate(`${basePath}/`);
     }
   }, [navigate]);
 
   if (!customer) {
-    navigate("/profile");
+    navigate(`${basePath}/profile`);
     return null;
   }
 
@@ -84,7 +84,7 @@ function EditProfile() {
         confirmButtonText: "Back to profile",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/profile");
+          navigate(`${basePath}/profile`);
         }
       });
       return;
@@ -124,10 +124,10 @@ function EditProfile() {
           text: "Profile updated successfully."
         });
         if (initialData.email === formData.email) {
-          navigate("/profile");
+          navigate(`${basePath}/profile`);
         } else {
           localStorage.clear();
-          navigate("/login", {
+          navigate(`${basePath}/login`, {
             state: { email: formData.email, password: "" },
           });
         }

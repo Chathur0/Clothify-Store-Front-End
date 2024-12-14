@@ -14,6 +14,7 @@ function Home() {
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const basePath = "/Clothify-Store-Front-End";
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -97,7 +98,7 @@ function Home() {
             <button
               className="btn btn-success"
               onClick={() => {
-                navigate("/men-product");
+                navigate(`${basePath}/men-product`);
               }}
             >
               MORE INFO
@@ -114,7 +115,7 @@ function Home() {
             <button
               className="btn btn-success"
               onClick={() => {
-                navigate("/women-product");
+                navigate(`${basePath}/women-product`);
               }}
             >
               MORE INFO
@@ -137,7 +138,7 @@ function Home() {
             <button
               className="btn btn-success"
               onClick={() => {
-                navigate("/kids-product");
+                navigate(`${basePath}/kids-product`);
               }}
             >
               MORE INFO
@@ -154,7 +155,7 @@ function Home() {
             <button
               className="btn btn-success"
               onClick={() => {
-                navigate("/baby-product");
+                navigate(`${basePath}/baby-product`);
               }}
             >
               MORE INFO

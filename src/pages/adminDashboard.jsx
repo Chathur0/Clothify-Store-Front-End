@@ -10,13 +10,13 @@ function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [filterNumber, setFilterNumber] = useState("");
   const navigate = useNavigate();
-
+  const basePath = "/Clothify-Store-Front-End";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
     if (!token) {
       setIsLoggedIn(false);
-      navigate("/login");
+      navigate(`${basePath}/login`);
       return;
     }
 
@@ -33,7 +33,7 @@ function AdminDashboard() {
         if (response.ok) {
           const responseData = await response.json();
           if (responseData.role !== "admin") {
-            navigate("Clothify-Store-Front-End/");
+            navigate(`${basePath}/`);
             return;
           }
           setUserRole(responseData.role);
@@ -53,7 +53,7 @@ function AdminDashboard() {
               willClose: () => {
                 localStorage.removeItem("jwtToken");
                 setIsLoggedIn(false);
-                navigate("/login");
+                navigate(`${basePath}/login`);
               },
             });           
           } else {
@@ -93,10 +93,9 @@ function AdminDashboard() {
     fetchUserRole();
     fetchOrders();
   }, [navigate]);
-console.log(orders);
 
   const viewOrderDetails = (id) => {
-    navigate("/order", { state:  id  });
+    navigate(`${basePath}/order`, { state:  id  });
   };
 
   const filteredOrders = orders.filter((order) =>
@@ -114,7 +113,7 @@ console.log(orders);
         <h2 className="text-center mb-4">Admin Dashboard</h2>
 
         <div className="d-flex justify-content-end mb-3">
-          <Link to={"/add-product"} className="btn btn-success">
+          <Link to={`${basePath}/add-product`} className="btn btn-success">
             Add Product
           </Link>
         </div>

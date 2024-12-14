@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-function navigationBar(props) {
+
+function NavigationBar(props) {
+  const basePath = "/Clothify-Store-Front-End";
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container">
-          <Link to={"Clothify-Store-Front-End/"} className="navbar-brand fw-bolder fs-1">
+          <Link to={`${basePath}/`} className="navbar-brand fw-bolder fs-1">
             Clothify Store
           </Link>
           <button
@@ -20,66 +23,51 @@ function navigationBar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav mx-auto">
-              <Link
-                to={"/women-product"}
-                className="nav-link fw-bolder"
-                aria-current="page"
-                href="#"
-              >
+              <Link to={`${basePath}/women-product`} className="nav-link fw-bolder">
                 Women
               </Link>
-              <Link to={"/men-product"} className="nav-link fw-bolder" href="#">
+              <Link to={`${basePath}/men-product`} className="nav-link fw-bolder">
                 Men
               </Link>
-              <Link
-                to={"/baby-product"}
-                className="nav-link fw-bolder"
-                href="#"
-              >
+              <Link to={`${basePath}/baby-product`} className="nav-link fw-bolder">
                 Baby
               </Link>
-              <Link
-                to={"/kids-product"}
-                className="nav-link fw-bolder"
-                href="#"
-              >
+              <Link to={`${basePath}/kids-product`} className="nav-link fw-bolder">
                 Kids
               </Link>
             </div>
 
             <div className="flex-shrink-0 dropdown">
-              {props.isLoggedIn ? (
-                <>
-                  <a
-                    href="#"
-                    className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      src={
-                        props.profileImage ||
+              <a
+                href="#"
+                className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src={
+                    props.isLoggedIn
+                      ? props.profileImage ||
                         "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
-                      }
-                      alt="User"
-                      width="32"
-                      height="32"
-                      className="rounded-circle"
-                    />
-                  </a>
-                  <ul className="dropdown-menu text-small shadow">
+                      : "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
+                  }
+                  alt={props.isLoggedIn ? "User" : "Guest"}
+                  width="32"
+                  height="32"
+                  className="rounded-circle"
+                />
+              </a>
+              <ul className="dropdown-menu text-small shadow">
+                {props.isLoggedIn ? (
+                  <>
                     <li>
-                      <Link to={"/profile"} className="dropdown-item" href="#">
+                      <Link to={`${basePath}/profile`} className="dropdown-item">
                         Profile
                       </Link>
                     </li>
                     {props.userRole === "admin" && (
                       <li>
-                        <Link
-                          to={"/dashboard"}
-                          className="dropdown-item"
-                          href="/dashboard"
-                        >
+                        <Link to={`${basePath}/dashboard`} className="dropdown-item">
                           Dashboard
                         </Link>
                       </li>
@@ -87,50 +75,33 @@ function navigationBar(props) {
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
-
                     <li>
                       <button
                         className="dropdown-item"
                         onClick={() => {
                           localStorage.removeItem("jwtToken");
-                          location.reload();
+                          window.location.reload();
                         }}
                       >
                         Sign out
                       </button>
                     </li>
-                  </ul>
-                </>
-              ) : (
-                <>
-                  <a
-                    href="#"
-                    className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
-                      alt="Guest"
-                      width="32"
-                      height="32"
-                      className="rounded-circle"
-                    />
-                  </a>
-                  <ul className="dropdown-menu text-small shadow">
+                  </>
+                ) : (
+                  <>
                     <li>
-                      <Link to={"/login"} className="dropdown-item">
+                      <Link to={`${basePath}/login`} className="dropdown-item">
                         Login
                       </Link>
                     </li>
                     <li>
-                      <Link to={"/register"} className="dropdown-item" href="#">
+                      <Link to={`${basePath}/register`} className="dropdown-item">
                         Sign Up
                       </Link>
                     </li>
-                  </ul>
-                </>
-              )}
+                  </>
+                )}
+              </ul>
             </div>
           </div>
         </div>
@@ -139,4 +110,4 @@ function navigationBar(props) {
   );
 }
 
-export default navigationBar;
+export default NavigationBar;

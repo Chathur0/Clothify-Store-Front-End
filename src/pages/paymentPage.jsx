@@ -10,6 +10,7 @@ const PaymentPage = () => {
   const [customer, setCustomer] = useState(null);
   const { clearCart } = useCart();
   const totalCost = cart.reduce((acc, item) => acc + item.sQty * item.price, 0);
+  const basePath = "/Clothify-Store-Front-End";
   const navigate = useNavigate();
   const Toast = Swal.mixin({
     toast: true,
@@ -24,7 +25,7 @@ const PaymentPage = () => {
   });
   useEffect(() => {
     if (cart.length === 0) {
-      navigate("Clothify-Store-Front-End/");
+      navigate(`${basePath}/`);
       return;
     }
     const fetchCustomerDetails = async () => {
@@ -54,7 +55,7 @@ const PaymentPage = () => {
                 willClose: () => {
                   localStorage.removeItem("jwtToken");
                   setIsLoggedIn(false);
-                  navigate("/login")
+                  navigate(`${basePath}/login`)
                 },
               });
             } else {
@@ -67,7 +68,7 @@ const PaymentPage = () => {
           console.error("Error during fetch:", error);
         }
       } else {
-        navigate("/login");
+        navigate(`${basePath}/login`);
       }
     };
     fetchCustomerDetails();
@@ -101,7 +102,7 @@ const PaymentPage = () => {
             title: `Payment Successful! ${await response.text()}`,
           });
           clearCart();
-          navigate("Clothify-Store-Front-End/");
+          navigate(`${basePath}/`);
         } else {
           console.error("Error from server:", response.status);
           Swal.fire({

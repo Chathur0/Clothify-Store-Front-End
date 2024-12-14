@@ -15,6 +15,7 @@ const CartPopup = ({ show, onClose }) => {
       toast.onmouseleave = Swal.resumeTimer;
     },
   });
+  const basePath = "/Clothify-Store-Front-End";
   const { cart,cartCount, updateCartQty, removeFromCart } = useCart();
   const navigate = useNavigate();
   if (!show) return null;
@@ -32,7 +33,7 @@ const CartPopup = ({ show, onClose }) => {
     }
   };
   const handleProceedToPay = () => {
-    navigate("/payment",{ state: { cart, cartCount } });
+    navigate(`${basePath}/payment`,{ state: { cart, cartCount } });
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { BsCart } from "react-icons/bs";
 import CartPopup from "../component/cart";
@@ -12,7 +12,7 @@ const MenProducts = () => {
   const [products, setProducts] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const { cartCount, addToCart } = useCart();
-
+  const basePath = "/Clothify-Store-Front-End";
   const [loading, setLoading] = useState(true);
 
   const [userRole, setUserRole] = useState("");
@@ -128,7 +128,7 @@ const MenProducts = () => {
                   />
                   <div className="card-body">
                     <Link
-                      to={`/product/${product.id}`}
+                      to={`${basePath}/product/${product.id}`}
                       className="text-decoration-none"
                     >
                       <h5 className="card-title">{product.name}</h5>
@@ -146,7 +146,7 @@ const MenProducts = () => {
                       </button>
                       {userRole === "admin" && (
                         <Link
-                          to={`/product/${product.id}`}
+                          to={`${basePath}/product/${product.id}`}
                           className="btn btn-success"
                           state={{ edit: true }}
                         >

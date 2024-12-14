@@ -4,12 +4,12 @@ import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
-import { jwtDecode } from "jwt-decode";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const basePath = "/Clothify-Store-Front-End";
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -52,7 +52,7 @@ function Login() {
           icon: "success",
           title: "Logged in successfully",
         });
-        navigate("Clothify-Store-Front-End/");
+        navigate(`${basePath}/`);
       } else {
         Toast.fire({
           icon: "error",
@@ -83,7 +83,7 @@ function Login() {
           icon: "success",
           title: "Logged in successfully",
         });
-        navigate("/Clothify-Store-Front-End");
+        navigate(`${basePath}`);
       } else {
         Toast.fire({
           icon: "error",
@@ -215,7 +215,7 @@ function Login() {
 
           <div className="mt-3 d-flex justify-content-center gap-2">
             <p>Don't have an account?</p>
-            <Link to="/register" className="text-decoration-none">
+            <Link to={`${basePath}/register`} className="text-decoration-none">
               Register
             </Link>
           </div>

@@ -16,6 +16,7 @@ function WomenProduct() {
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const basePath = "/Clothify-Store-Front-End";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
@@ -125,7 +126,7 @@ function WomenProduct() {
                   />
                   <div className="card-body">
                     <Link
-                      to={`/product/${product.id}`}
+                      to={`${basePath}/product/${product.id}`}
                       className="text-decoration-none"
                     >
                       <h5 className="card-title">{product.name}</h5>
@@ -143,7 +144,7 @@ function WomenProduct() {
                       </button>
                       {userRole === "admin" && (
                         <Link
-                          to={`/product/${product.id}`}
+                          to={`${basePath}/product/${product.id}`}
                           className="btn btn-success"
                           state={{ edit: true }}
                         >

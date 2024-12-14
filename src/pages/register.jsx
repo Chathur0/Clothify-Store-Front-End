@@ -16,6 +16,7 @@ function Register() {
       toast.onmouseleave = Swal.resumeTimer;
     },
   });
+  const basePath = "/Clothify-Store-Front-End";
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -91,7 +92,7 @@ function Register() {
           icon: "success",
           title: "User added successfully!",
         });
-        navigate("/login", {
+        navigate(`${basePath}/login`, {
           state: { email: formData.email, password: formData.password },
         });
       } else {     
