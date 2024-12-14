@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch , Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Home from "./pages/home";
@@ -21,7 +21,7 @@ function App() {
   return (
     <CartProvider>
       <Router basename="/Clothify-Store-Front-End">
-        <Switch>
+        <Routes>
           <Route path={`/`} element={<Home />} />
           <Route path={`/login`} element={<Login />} />
           <Route path={`/register`} element={<Register />} />
@@ -36,7 +36,7 @@ function App() {
           <Route path={`/product/:id`} element={<ProductDetails />} />
           <Route path={`/payment`} element={<PaymentPage />} />
           <Route path={`/order`} element={<Order />} />
-        </Switch>
+        </Routes>
       </Router>
     </CartProvider>
   );
