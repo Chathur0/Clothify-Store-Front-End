@@ -83,7 +83,7 @@ function Login() {
           icon: "success",
           title: "Logged in successfully",
         });
-        navigate("Clothify-Store-Front-End/");
+        navigate("/Clothify-Store-Front-End");
       } else {
         Toast.fire({
           icon: "error",
