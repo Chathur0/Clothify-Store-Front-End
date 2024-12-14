@@ -14,12 +14,10 @@ function CustomerProfile() {
   const [showOrderModal, setShowOrderModal] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
-
     if (!token) {
       navigate("/");
       return;
     }
-
     const fetchUserRole = async () => {
       try {
         const response = await fetch("http://localhost:8080/get-user-role", {
@@ -78,7 +76,7 @@ function CustomerProfile() {
           });
           if (response.ok) {
             const customerData = await response.json();
-            setCustomer(customerData);
+            setCustomer(customerData);  
           } else {
             console.error("Error fetching customer details");
           }
@@ -97,7 +95,7 @@ function CustomerProfile() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "OK",
-      confirmButtonColor:"#dc3545",
+      confirmButtonColor: "#dc3545",
       cancelButtonText: "Cancel",
     });
     if (result.isConfirmed) {
@@ -115,7 +113,7 @@ function CustomerProfile() {
           Swal.fire({
             title: "Deleted!",
             text: "Account deleted successfully.",
-            icon: "success"
+            icon: "success",
           });
           localStorage.removeItem("jwtToken");
           navigate("/");
@@ -124,7 +122,7 @@ function CustomerProfile() {
           Swal.fire({
             title: "Error!",
             text: "There was an issue deleting your account. Please try again.",
-            icon: "error"
+            icon: "error",
           });
         }
       } catch (error) {
@@ -132,7 +130,7 @@ function CustomerProfile() {
         Swal.fire({
           title: "Error!",
           text: "An error occurred while deleting your account.",
-          icon: "error"
+          icon: "error",
         });
       }
     }
@@ -182,7 +180,6 @@ function CustomerProfile() {
   if (!customer) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
       <NavigationBar
@@ -210,7 +207,10 @@ function CustomerProfile() {
 
             <div className="col-md-8 mt-5 mt-md-0">
               <div className="mb-3">
-                <strong>Name:</strong> {customer.fname + " " + customer.lname}
+                <strong>Name:</strong>{" "}
+                {customer.fname +
+                  " " +
+                  (customer.lname != null ? customer.lname : "")}
               </div>
               <div className="mb-3">
                 <strong>Email:</strong> {customer.email}
@@ -237,14 +237,14 @@ function CustomerProfile() {
                     <FaClipboardList /> Order History
                   </button>
                 )}
-                {userRole !== "admin" &&(
+                {userRole !== "admin" && (
                   <button
-                  onClick={handleDeleteAccount}
-                  className="btn btn-danger col mt-3 mt-sm-0"
-                >
-                  <FaTrashAlt /> Delete Account
-                </button>
-                )}  
+                    onClick={handleDeleteAccount}
+                    className="btn btn-danger col mt-3 mt-sm-0"
+                  >
+                    <FaTrashAlt /> Delete Account
+                  </button>
+                )}
               </div>
             </div>
           </div>

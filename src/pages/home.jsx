@@ -37,7 +37,7 @@ function Home() {
           const responseData = await response.json();
           setUserRole(responseData.role);
           setProfileImage(responseData.profileImage);
-          setIsLoggedIn(true);
+          setIsLoggedIn(true);            
         } else if (response.status === 401) {
           const errorData = await response.json();
           if (errorData.error === "Token has expired") {
