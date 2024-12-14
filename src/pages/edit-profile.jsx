@@ -7,7 +7,7 @@ function EditProfile() {
   const location = useLocation();
   const navigate = useNavigate();
   const customer = location.state?.customer;
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const [newImage, setNewImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(
     customer?.image || "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"

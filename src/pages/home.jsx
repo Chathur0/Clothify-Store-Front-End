@@ -14,7 +14,7 @@ function Home() {
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");

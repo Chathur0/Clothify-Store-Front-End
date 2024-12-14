@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function NavigationBar(props) {
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
 
   return (
     <>

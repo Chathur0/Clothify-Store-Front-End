@@ -10,7 +10,7 @@ const PaymentPage = () => {
   const [customer, setCustomer] = useState(null);
   const { clearCart } = useCart();
   const totalCost = cart.reduce((acc, item) => acc + item.sQty * item.price, 0);
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const navigate = useNavigate();
   const Toast = Swal.mixin({
     toast: true,

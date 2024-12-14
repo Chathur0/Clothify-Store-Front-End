@@ -12,7 +12,7 @@ function CustomerProfile() {
   const [profileImage, setProfileImage] = useState("");
   const [orderHistory, setOrderHistory] = useState(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {

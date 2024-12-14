@@ -16,7 +16,7 @@ function WomenProduct() {
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 

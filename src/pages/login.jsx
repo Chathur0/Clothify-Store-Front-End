@@ -9,7 +9,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",

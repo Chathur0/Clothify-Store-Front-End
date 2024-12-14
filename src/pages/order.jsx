@@ -11,7 +11,7 @@ function Order() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [status, setStatus] = useState(null);
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",

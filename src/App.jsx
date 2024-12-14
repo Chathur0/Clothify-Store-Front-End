@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch , Route } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Home from "./pages/home";
@@ -20,29 +20,23 @@ function App() {
 
   return (
     <CartProvider>
-      <Router>
-        <Routes>
-          <Route path={`${basePath}/`} element={<Home />} />
-          <Route path={`${basePath}/login`} element={<Login />} />
-          <Route path={`${basePath}/register`} element={<Register />} />
-          <Route path={`${basePath}/profile`} element={<CustomerProfile />} />
-          <Route path={`${basePath}/edit-profile`} element={<EditProfile />} />
-          <Route path={`${basePath}/dashboard`} element={<AdminDashboard />} />
-          <Route path={`${basePath}/add-product`} element={<AddProduct />} />
-          <Route path={`${basePath}/men-product`} element={<MenPage />} />
-          <Route
-            path={`${basePath}/women-product`}
-            element={<WomenProduct />}
-          />
-          <Route path={`${basePath}/kids-product`} element={<KidsProduct />} />
-          <Route path={`${basePath}/baby-product`} element={<BabyProducts />} />
-          <Route
-            path={`${basePath}/product/:id`}
-            element={<ProductDetails />}
-          />
-          <Route path={`${basePath}/payment`} element={<PaymentPage />} />
-          <Route path={`${basePath}/order`} element={<Order />} />
-        </Routes>
+      <Router basename="/Clothify-Store-Front-End">
+        <Switch>
+          <Route path={`/`} element={<Home />} />
+          <Route path={`/login`} element={<Login />} />
+          <Route path={`/register`} element={<Register />} />
+          <Route path={`/profile`} element={<CustomerProfile />} />
+          <Route path={`/edit-profile`} element={<EditProfile />} />
+          <Route path={`/dashboard`} element={<AdminDashboard />} />
+          <Route path={`/add-product`} element={<AddProduct />} />
+          <Route path={`/men-product`} element={<MenPage />} />
+          <Route path={`/women-product`} element={<WomenProduct />} />
+          <Route path={`/kids-product`} element={<KidsProduct />} />
+          <Route path={`/baby-product`} element={<BabyProducts />} />
+          <Route path={`/product/:id`} element={<ProductDetails />} />
+          <Route path={`/payment`} element={<PaymentPage />} />
+          <Route path={`/order`} element={<Order />} />
+        </Switch>
       </Router>
     </CartProvider>
   );

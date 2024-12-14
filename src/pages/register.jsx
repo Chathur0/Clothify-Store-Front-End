@@ -16,7 +16,7 @@ function Register() {
       toast.onmouseleave = Swal.resumeTimer;
     },
   });
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

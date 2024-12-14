@@ -10,7 +10,7 @@ function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [filterNumber, setFilterNumber] = useState("");
   const navigate = useNavigate();
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 

@@ -12,7 +12,7 @@ function BabyProducts() {
   const [products, setProducts] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const { cartCount, addToCart } = useCart();
-  const basePath = "/Clothify-Store-Front-End";
+  const basePath = "";
   const [loading, setLoading] = useState(true);
 
   const [userRole, setUserRole] = useState("");

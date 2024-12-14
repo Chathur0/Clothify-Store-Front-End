@@ -18,7 +18,7 @@ function AddProduct() {
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
 
-  const basePath = "/Clothify-Store-Front-End"; 
+  const basePath = ""; 
 
   const Toast = Swal.mixin({
     toast: true,
