@@ -37,7 +37,7 @@ function EditProfile() {
 
   useEffect(() => {
     if (!localStorage.getItem("jwtToken")) {
-      navigate("/");
+      navigate("Clothify-Store-Front-End/");
     }
   }, [navigate]);
 

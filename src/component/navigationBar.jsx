@@ -4,7 +4,7 @@ function navigationBar(props) {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container">
-          <Link to={"/"} className="navbar-brand fw-bolder fs-1">
+          <Link to={"Clothify-Store-Front-End/"} className="navbar-brand fw-bolder fs-1">
             Clothify Store
           </Link>
           <button

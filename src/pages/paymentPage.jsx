@@ -24,7 +24,7 @@ const PaymentPage = () => {
   });
   useEffect(() => {
     if (cart.length === 0) {
-      navigate("/");
+      navigate("Clothify-Store-Front-End/");
       return;
     }
     const fetchCustomerDetails = async () => {
@@ -101,7 +101,7 @@ const PaymentPage = () => {
             title: `Payment Successful! ${await response.text()}`,
           });
           clearCart();
-          navigate("/");
+          navigate("Clothify-Store-Front-End/");
         } else {
           console.error("Error from server:", response.status);
           Swal.fire({

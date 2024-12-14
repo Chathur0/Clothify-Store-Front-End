@@ -51,7 +51,7 @@ function AddProduct() {
         if (response.ok) {
           const responseData = await response.json();
           if (responseData.role != "admin") {
-            navigate("/");
+            navigate("Clothify-Store-Front-End/");
             return;
           }
           setUserRole(responseData.role);

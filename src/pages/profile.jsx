@@ -15,7 +15,7 @@ function CustomerProfile() {
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {
-      navigate("/");
+      navigate("Clothify-Store-Front-End/");
       return;
     }
     const fetchUserRole = async () => {
@@ -145,7 +145,7 @@ function CustomerProfile() {
       const token = localStorage.getItem("jwtToken");
 
       if (!token) {
-        navigate("/");
+        navigate("Clothify-Store-Front-End/");
         return;
       }
       if (customer) {
