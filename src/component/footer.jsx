@@ -3,116 +3,116 @@ function Footer() {
     <>
       <div className="bg-light">
       <div className="container pt-5">
-        <footer class="">
-          <div class="row">
-            <div class="col-6 col-md-2 mb-3">
+        <footer className="">
+          <div className="row">
+            <div className="col-6 col-md-2 mb-3">
               <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+              <ul className="nav flex-column">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Home
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Features
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Pricing
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     FAQs
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     About
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div class="col-6 col-md-2 mb-3">
+            <div className="col-6 col-md-2 mb-3">
               <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+              <ul className="nav flex-column">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Home
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Features
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Pricing
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     FAQs
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     About
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div class="col-6 col-md-2 mb-3">
+            <div className="col-6 col-md-2 mb-3">
               <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+              <ul className="nav flex-column">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Home
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Features
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     Pricing
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     FAQs
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-body-secondary">
                     About
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div class="col-md-5 offset-md-1 mb-3">
+            <div className="col-md-5 offset-md-1 mb-3">
               <form>
                 <h5>Subscribe to our newsletter</h5>
                 <p>Monthly digest of what's new and exciting from us.</p>
-                <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                  <label for="newsletter1" class="visually-hidden">
+                <div className="d-flex flex-column flex-sm-row w-100 gap-2">
+                  <label htmlFor="newsletter1" className="visually-hidden">
                     Email address
                   </label>
                   <input
                     id="newsletter1"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Email address"
                   />
-                  <button class="btn btn-primary" type="button">
+                  <button className="btn btn-primary" type="button">
                     Subscribe
                   </button>
                 </div>
@@ -120,27 +120,27 @@ function Footer() {
             </div>
           </div>
 
-          <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+          <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
             <p>&copy; 2024 Company, Inc. All rights reserved.</p>
-            <ul class="list-unstyled d-flex">
-              <li class="ms-3">
-                <a class="link-body-emphasis" href="#">
-                  <svg class="bi" width="24" height="24">
-                    <use xlink:href="#twitter" />
+            <ul className="list-unstyled d-flex">
+              <li className="ms-3">
+                <a className="link-body-emphasis" href="#">
+                  <svg className="bi" width="24" height="24">
+                    <use xlinkHref="#twitter" />
                   </svg>
                 </a>
               </li>
-              <li class="ms-3">
-                <a class="link-body-emphasis" href="#">
-                  <svg class="bi" width="24" height="24">
-                    <use xlink:href="#instagram" />
+              <li className="ms-3">
+                <a className="link-body-emphasis" href="#">
+                  <svg className="bi" width="24" height="24">
+                    <use xlinkHref="#instagram" />
                   </svg>
                 </a>
               </li>
-              <li class="ms-3">
-                <a class="link-body-emphasis" href="#">
-                  <svg class="bi" width="24" height="24">
-                    <use xlink:href="#facebook" />
+              <li className="ms-3">
+                <a className="link-body-emphasis" href="#">
+                  <svg className="bi" width="24" height="24">
+                    <use xlinkHref="#facebook" />
                   </svg>
                 </a>
               </li>

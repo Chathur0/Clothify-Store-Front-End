@@ -4,6 +4,7 @@ import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 
 function Order() {
+  const API_URL = import.meta.env.VITE_API_URL
   const id = useLocation().state;
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
@@ -11,7 +12,6 @@ function Order() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [status, setStatus] = useState(null);
-  const basePath = "";
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -33,7 +33,7 @@ function Order() {
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -80,11 +80,11 @@ function Order() {
     const fetchOrderDetails = async () => {
       const token = localStorage.getItem("jwtToken");
       if (!token) {
-        navigate(`${basePath}/login`);
+        navigate(`/login`);
         return;
       }
       try {
-        const response = await fetch(`http://localhost:8080/get-order/${id}`, {
+        const response = await fetch(`${API_URL}/get-order/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -98,7 +98,7 @@ function Order() {
           setStatus(data.status);
         } else if (response.status === 401) {
           localStorage.clear();
-          navigate(`${basePath}/login`);
+          navigate(`/login`);
         }
       } catch (err) {
         console.error(err);
@@ -134,7 +134,7 @@ function Order() {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await fetch(
-        `http://localhost:8080/update-order-status/${id}`,
+        `${API_URL}/update-order-status/${id}`,
         {
           method: "PUT",
           headers: {

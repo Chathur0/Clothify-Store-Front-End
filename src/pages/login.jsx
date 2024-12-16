@@ -7,9 +7,9 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
+  const API_URL = import.meta.env.VITE_API_URL
   const navigate = useNavigate();
   const location = useLocation();
-  const basePath = "";
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -35,7 +35,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -52,7 +52,7 @@ function Login() {
           icon: "success",
           title: "Logged in successfully",
         });
-        navigate(`${basePath}/`);
+        navigate(`/`);
       } else {
         Toast.fire({
           icon: "error",
@@ -66,7 +66,7 @@ function Login() {
   async function loginViaSocialMedia(dataForSend) {
     try {
       const result = await fetch(
-        "http://localhost:8080/login-via-social-media",
+        `${API_URL}/login-via-social-media`,
         {
           method: "POST",
           headers: {
@@ -83,7 +83,7 @@ function Login() {
           icon: "success",
           title: "Logged in successfully",
         });
-        navigate(`${basePath}`);
+        navigate(`/`);
       } else {
         Toast.fire({
           icon: "error",
@@ -215,7 +215,7 @@ function Login() {
 
           <div className="mt-3 d-flex justify-content-center gap-2">
             <p>Don't have an account?</p>
-            <Link to={`${basePath}/register`} className="text-decoration-none">
+            <Link to={`/register`} className="text-decoration-none">
               Register
             </Link>
           </div>

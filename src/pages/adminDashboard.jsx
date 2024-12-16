@@ -4,25 +4,25 @@ import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 
 function AdminDashboard() {
+  const API_URL = import.meta.env.VITE_API_URL
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [orders, setOrders] = useState([]);
   const [filterNumber, setFilterNumber] = useState("");
   const navigate = useNavigate();
-  const basePath = "";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
     if (!token) {
       setIsLoggedIn(false);
-      navigate(`${basePath}/login`);
+      navigate(`/login`);
       return;
     }
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -33,7 +33,7 @@ function AdminDashboard() {
         if (response.ok) {
           const responseData = await response.json();
           if (responseData.role !== "admin") {
-            navigate(`${basePath}/`);
+            navigate(`/`);
             return;
           }
           setUserRole(responseData.role);
@@ -53,7 +53,7 @@ function AdminDashboard() {
               willClose: () => {
                 localStorage.removeItem("jwtToken");
                 setIsLoggedIn(false);
-                navigate(`${basePath}/login`);
+                navigate(`/login`);
               },
             });           
           } else {
@@ -72,7 +72,7 @@ function AdminDashboard() {
 
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-orders", {
+        const response = await fetch(`${API_URL}/get-orders`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -95,7 +95,7 @@ function AdminDashboard() {
   }, [navigate]);
 
   const viewOrderDetails = (id) => {
-    navigate(`${basePath}/order`, { state:  id  });
+    navigate(`/order`, { state:  id  });
   };
 
   const filteredOrders = orders.filter((order) =>
@@ -113,7 +113,7 @@ function AdminDashboard() {
         <h2 className="text-center mb-4">Admin Dashboard</h2>
 
         <div className="d-flex justify-content-end mb-3">
-          <Link to={`${basePath}/add-product`} className="btn btn-success">
+          <Link to={`/add-product`} className="btn btn-success">
             Add Product
           </Link>
         </div>

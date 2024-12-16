@@ -4,10 +4,11 @@ import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css";
 
 function EditProfile() {
+  const API_URL = import.meta.env.VITE_API_URL
   const location = useLocation();
   const navigate = useNavigate();
   const customer = location.state?.customer;
-  const basePath = "";
+
   const [newImage, setNewImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(
     customer?.image || "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
@@ -37,12 +38,12 @@ function EditProfile() {
 
   useEffect(() => {
     if (!localStorage.getItem("jwtToken")) {
-      navigate(`${basePath}/`);
+      navigate(`/`);
     }
   }, [navigate]);
 
   if (!customer) {
-    navigate(`${basePath}/profile`);
+    navigate(`/profile`);
     return null;
   }
 
@@ -84,7 +85,7 @@ function EditProfile() {
         confirmButtonText: "Back to profile",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate(`${basePath}/profile`);
+          navigate(`/profile`);
         }
       });
       return;
@@ -110,7 +111,7 @@ function EditProfile() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/update-user", {
+      const response = await fetch(`${API_URL}/update-user`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -124,10 +125,10 @@ function EditProfile() {
           text: "Profile updated successfully."
         });
         if (initialData.email === formData.email) {
-          navigate(`${basePath}/profile`);
+          navigate(`/profile`);
         } else {
           localStorage.clear();
-          navigate(`${basePath}/login`, {
+          navigate(`/login`, {
             state: { email: formData.email, password: "" },
           });
         }

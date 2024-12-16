@@ -5,6 +5,7 @@ import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 
 function CustomerProfile() {
+  const API_URL = import.meta.env.VITE_API_URL
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(null);
   const [userRole, setUserRole] = useState("");
@@ -12,16 +13,15 @@ function CustomerProfile() {
   const [profileImage, setProfileImage] = useState("");
   const [orderHistory, setOrderHistory] = useState(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
-  const basePath = "";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {
-      navigate(`${basePath}/`);
+      navigate(`/`);
       return;
     }
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function CustomerProfile() {
       const token = localStorage.getItem("jwtToken");
       if (token) {
         try {
-          const response = await fetch("http://localhost:8080/current-user", {
+          const response = await fetch(`${API_URL}/current-user`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -88,7 +88,6 @@ function CustomerProfile() {
     };
     fetchCustomerDetails();
   }, []);
-console.log(customer);
 
   const handleDeleteAccount = async () => {
     const result = await Swal.fire({
@@ -103,7 +102,7 @@ console.log(customer);
     if (result.isConfirmed) {
       try {
         const response = await fetch(
-          `http://localhost:8080/delete-user/${customer.id}`,
+          `${API_URL}/delete-user/${customer.id}`,
           {
             method: "DELETE",
             headers: {
@@ -118,7 +117,7 @@ console.log(customer);
             icon: "success",
           });
           localStorage.removeItem("jwtToken");
-          navigate(`${basePath}/`);
+          navigate(`/`);
         } else {
           console.error("Failed to delete account.");
           Swal.fire({
@@ -139,7 +138,7 @@ console.log(customer);
   };
 
   const handleEditProfile = () => {
-    navigate(`${basePath}/edit-profile`, { state: { customer } });
+    navigate(`/edit-profile`, { state: { customer } });
   };
 
   useEffect(() => {
@@ -147,13 +146,13 @@ console.log(customer);
       const token = localStorage.getItem("jwtToken");
 
       if (!token) {
-        navigate(`${basePath}/`);
+        navigate(`/`);
         return;
       }
       if (customer) {
         try {
           const response = await fetch(
-            `http://localhost:8080/order-history/${customer.id}`,
+            `${API_URL}/order-history/${customer.id}`,
             {
               method: "GET",
               headers: {
@@ -303,7 +302,7 @@ console.log(customer);
                           <button
                             className="btn btn-outline-primary rounded-5"
                             onClick={() => {
-                              navigate(`${basePath}/order`, { state: order.orderId });
+                              navigate(`/order`, { state: order.orderId });
                             }}
                           >
                             Details

@@ -9,10 +9,10 @@ import banner from "/banner_images/baby.jpg";
 import Swal from "sweetalert2";
 
 function BabyProducts() {
+  const API_URL = import.meta.env.VITE_API_URL
   const [products, setProducts] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const { cartCount, addToCart } = useCart();
-  const basePath = "";
   const [loading, setLoading] = useState(true);
 
   const [userRole, setUserRole] = useState("");
@@ -28,7 +28,7 @@ function BabyProducts() {
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ function BabyProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-baby-product");
+        const response = await fetch(`${API_URL}/get-baby-product`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -127,7 +127,7 @@ function BabyProducts() {
                   />
                   <div className="card-body">
                     <Link
-                      to={`${basePath}/product/${product.id}`}
+                      to={`/product/${product.id}`}
                       className="text-decoration-none"
                     >
                       <h5 className="card-title">{product.name}</h5>
@@ -145,7 +145,7 @@ function BabyProducts() {
                       </button>
                       {userRole === "admin" && (
                         <Link
-                          to={`${basePath}/product/${product.id}`}
+                          to={`/product/${product.id}`}
                           className="btn btn-success"
                           state={{ edit: true }}
                         >

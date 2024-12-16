@@ -13,6 +13,7 @@ import styles from "./alertStyles.module.css";
 Modal.setAppElement("#root");
 
 const ProductDetails = () => {
+  const API_URL = import.meta.env.VITE_API_URL
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
@@ -74,7 +75,7 @@ const ProductDetails = () => {
     });
     if (result.isConfirmed) {
       try {
-        const response = await fetch("http://localhost:8080/change-product", {
+        const response = await fetch(`${API_URL}/change-product`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -130,7 +131,7 @@ const ProductDetails = () => {
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -184,7 +185,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/product/${id}`);
+        const response = await fetch(`${API_URL}/product/${id}`);
         const data = await response.json();
         setProduct(data);
       } catch (error) {
@@ -209,7 +210,7 @@ const ProductDetails = () => {
     if (result.isConfirmed) {
       try {
         const response = await fetch(
-          `http://localhost:8080/delete-product/${id}`,
+          `${API_URL}/delete-product/${id}`,
           {
             method: "DELETE",
             headers: {

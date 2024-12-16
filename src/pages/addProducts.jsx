@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css";
 
 function AddProduct() {
+  const API_URL = import.meta.env.VITE_API_URL
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -17,8 +18,6 @@ function AddProduct() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
-
-  const basePath = ""; 
 
   const Toast = Swal.mixin({
     toast: true,
@@ -37,12 +36,12 @@ function AddProduct() {
 
     if (!token) {
       setIsLoggedIn(false);
-      navigate(`${basePath}/login`);
+      navigate(`/login`);
     }
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +52,7 @@ function AddProduct() {
         if (response.ok) {
           const responseData = await response.json();
           if (responseData.role !== "admin") {
-            navigate(`${basePath}/`);
+            navigate(`/`);
             return;
           }
           setUserRole(responseData.role);
@@ -73,7 +72,7 @@ function AddProduct() {
               willClose: () => {
                 localStorage.removeItem("jwtToken");
                 setIsLoggedIn(false);
-                navigate(`${basePath}/login`);
+                navigate(`/login`);
               },
             });
           } else {
@@ -130,7 +129,7 @@ function AddProduct() {
     formDataToSend.append("image", formData.image);
 
     try {
-      const response = await fetch("http://localhost:8080/add-product", {
+      const response = await fetch(`${API_URL}/add-product`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,

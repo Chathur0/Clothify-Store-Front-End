@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function Home() {
+  const API_URL = import.meta.env.VITE_API_URL
+  
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
@@ -26,7 +28,7 @@ function Home() {
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -166,7 +168,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer/>
     </>
   );
 }

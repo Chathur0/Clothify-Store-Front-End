@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css"
 function Register() {
+  const API_URL = import.meta.env.VITE_API_URL
   const navigate = useNavigate();
   const Toast = Swal.mixin({
     toast: true,
@@ -16,7 +17,6 @@ function Register() {
       toast.onmouseleave = Swal.resumeTimer;
     },
   });
-  const basePath = "";
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -82,7 +82,7 @@ function Register() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/add-customer", {
+      const response = await fetch(`${API_URL}/add-customer`, {
         method: "POST",
         body: formDataToSend,
       });
@@ -92,7 +92,7 @@ function Register() {
           icon: "success",
           title: "User added successfully!",
         });
-        navigate(`${basePath}/login`, {
+        navigate(`/login`, {
           state: { email: formData.email, password: formData.password },
         });
       } else {     

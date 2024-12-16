@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 
 function NavigationBar(props) {
-  const basePath = "";
 
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container">
-          <Link to={`${basePath}/`} className="navbar-brand fw-bolder fs-1">
+          <Link to={`/`} className="navbar-brand fw-bolder fs-1">
             Clothify Store
           </Link>
           <button
@@ -23,16 +22,16 @@ function NavigationBar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav mx-auto">
-              <Link to={`${basePath}/women-product`} className="nav-link fw-bolder">
+              <Link to={`/women-product`} className="nav-link fw-bolder">
                 Women
               </Link>
-              <Link to={`${basePath}/men-product`} className="nav-link fw-bolder">
+              <Link to={`/men-product`} className="nav-link fw-bolder">
                 Men
               </Link>
-              <Link to={`${basePath}/baby-product`} className="nav-link fw-bolder">
+              <Link to={`/baby-product`} className="nav-link fw-bolder">
                 Baby
               </Link>
-              <Link to={`${basePath}/kids-product`} className="nav-link fw-bolder">
+              <Link to={`/kids-product`} className="nav-link fw-bolder">
                 Kids
               </Link>
             </div>
@@ -61,13 +60,13 @@ function NavigationBar(props) {
                 {props.isLoggedIn ? (
                   <>
                     <li>
-                      <Link to={`${basePath}/profile`} className="dropdown-item">
+                      <Link to={`/profile`} className="dropdown-item">
                         Profile
                       </Link>
                     </li>
                     {props.userRole === "admin" && (
                       <li>
-                        <Link to={`${basePath}/dashboard`} className="dropdown-item">
+                        <Link to={`/dashboard`} className="dropdown-item">
                           Dashboard
                         </Link>
                       </li>
@@ -90,12 +89,12 @@ function NavigationBar(props) {
                 ) : (
                   <>
                     <li>
-                      <Link to={`${basePath}/login`} className="dropdown-item">
+                      <Link to={`/login`} className="dropdown-item">
                         Login
                       </Link>
                     </li>
                     <li>
-                      <Link to={`${basePath}/register`} className="dropdown-item">
+                      <Link to={`/register`} className="dropdown-item">
                         Sign Up
                       </Link>
                     </li>

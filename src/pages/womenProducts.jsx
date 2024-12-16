@@ -9,6 +9,7 @@ import banner from "/banner_images/women.jpg";
 import Swal from "sweetalert2";
 
 function WomenProduct() {
+  const API_URL = import.meta.env.VITE_API_URL
   const [products, setProducts] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const { cartCount, addToCart } = useCart();
@@ -16,7 +17,6 @@ function WomenProduct() {
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
-  const basePath = "";
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
@@ -27,7 +27,7 @@ function WomenProduct() {
 
     const fetchUserRole = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-user-role", {
+        const response = await fetch(`${API_URL}/get-user-role`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -77,7 +77,7 @@ function WomenProduct() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8080/get-women-product");
+        const response = await fetch(`${API_URL}/get-women-product`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -126,7 +126,7 @@ function WomenProduct() {
                   />
                   <div className="card-body">
                     <Link
-                      to={`${basePath}/product/${product.id}`}
+                      to={`/product/${product.id}`}
                       className="text-decoration-none"
                     >
                       <h5 className="card-title">{product.name}</h5>
@@ -144,7 +144,7 @@ function WomenProduct() {
                       </button>
                       {userRole === "admin" && (
                         <Link
-                          to={`${basePath}/product/${product.id}`}
+                          to={`/product/${product.id}`}
                           className="btn btn-success"
                           state={{ edit: true }}
                         >

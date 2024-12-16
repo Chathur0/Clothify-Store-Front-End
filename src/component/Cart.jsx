@@ -15,7 +15,6 @@ const CartPopup = ({ show, onClose }) => {
       toast.onmouseleave = Swal.resumeTimer;
     },
   });
-  const basePath = "";
   const { cart,cartCount, updateCartQty, removeFromCart } = useCart();
   const navigate = useNavigate();
   if (!show) return null;
@@ -33,7 +32,7 @@ const CartPopup = ({ show, onClose }) => {
     }
   };
   const handleProceedToPay = () => {
-    navigate(`${basePath}/payment`,{ state: { cart, cartCount } });
+    navigate(`/payment`,{ state: { cart, cartCount } });
   };
 
   return (

@@ -5,12 +5,12 @@ import { useCart } from "../context/CartContext";
 import Swal from "sweetalert2";
 
 const PaymentPage = () => {
+  const API_URL = import.meta.env.VITE_API_URL
   const location = useLocation();
   const { cart, cartCount } = location.state;
   const [customer, setCustomer] = useState(null);
   const { clearCart } = useCart();
   const totalCost = cart.reduce((acc, item) => acc + item.sQty * item.price, 0);
-  const basePath = "";
   const navigate = useNavigate();
   const Toast = Swal.mixin({
     toast: true,
@@ -25,14 +25,14 @@ const PaymentPage = () => {
   });
   useEffect(() => {
     if (cart.length === 0) {
-      navigate(`${basePath}/`);
+      navigate(`/`);
       return;
     }
     const fetchCustomerDetails = async () => {
       const token = localStorage.getItem("jwtToken");
       if (token) {
         try {
-          const response = await fetch("http://localhost:8080/current-user", {
+          const response = await fetch(`${API_URL}/current-user`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ const PaymentPage = () => {
                 willClose: () => {
                   localStorage.removeItem("jwtToken");
                   setIsLoggedIn(false);
-                  navigate(`${basePath}/login`)
+                  navigate(`/login`)
                 },
               });
             } else {
@@ -68,7 +68,7 @@ const PaymentPage = () => {
           console.error("Error during fetch:", error);
         }
       } else {
-        navigate(`${basePath}/login`);
+        navigate(`/login`);
       }
     };
     fetchCustomerDetails();
@@ -87,7 +87,7 @@ const PaymentPage = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:8080/buy-products", {
+        const response = await fetch(`${API_URL}/buy-products`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const PaymentPage = () => {
             title: `Payment Successful! ${await response.text()}`,
           });
           clearCart();
-          navigate(`${basePath}/`);
+          navigate(`/`);
         } else {
           console.error("Error from server:", response.status);
           Swal.fire({
