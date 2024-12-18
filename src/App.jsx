@@ -14,31 +14,34 @@ import BabyProducts from "./pages/babyProducts";
 import ProductDetails from "./pages/productDetails";
 import PaymentPage from "./pages/paymentPage";
 import Order from "./pages/order";
+import CheckConnection from "./component/CheckConnection";
 
 function App() {
   const basePath = "/Clothify-Store-Front-End";
 
   return (
-    <CartProvider>
-      <Router basename="/Clothify-Store-Front-End">
-        <Routes>
-          <Route path={`/`} element={<Home />} />
-          <Route path={`/login`} element={<Login />} />
-          <Route path={`/register`} element={<Register />} />
-          <Route path={`/profile`} element={<CustomerProfile />} />
-          <Route path={`/edit-profile`} element={<EditProfile />} />
-          <Route path={`/dashboard`} element={<AdminDashboard />} />
-          <Route path={`/add-product`} element={<AddProduct />} />
-          <Route path={`/men-product`} element={<MenPage />} />
-          <Route path={`/women-product`} element={<WomenProduct />} />
-          <Route path={`/kids-product`} element={<KidsProduct />} />
-          <Route path={`/baby-product`} element={<BabyProducts />} />
-          <Route path={`/product/:id`} element={<ProductDetails />} />
-          <Route path={`/payment`} element={<PaymentPage />} />
-          <Route path={`/order`} element={<Order />} />
-        </Routes>
-      </Router>
-    </CartProvider>
+    <CheckConnection>
+      <CartProvider>
+        <Router basename="/Clothify-Store-Front-End">
+          <Routes>
+            <Route path={`/`} element={<Home />} />
+            <Route path={`/login`} element={<Login />} />
+            <Route path={`/register`} element={<Register />} />
+            <Route path={`/profile`} element={<CustomerProfile />} />
+            <Route path={`/edit-profile`} element={<EditProfile />} />
+            <Route path={`/dashboard`} element={<AdminDashboard />} />
+            <Route path={`/add-product`} element={<AddProduct />} />
+            <Route path={`/men-product`} element={<MenPage />} />
+            <Route path={`/women-product`} element={<WomenProduct />} />
+            <Route path={`/kids-product`} element={<KidsProduct />} />
+            <Route path={`/baby-product`} element={<BabyProducts />} />
+            <Route path={`/product/:id`} element={<ProductDetails />} />
+            <Route path={`/payment`} element={<PaymentPage />} />
+            <Route path={`/order`} element={<Order />} />
+          </Routes>
+        </Router>
+      </CartProvider>
+    </CheckConnection>
   );
 }
 

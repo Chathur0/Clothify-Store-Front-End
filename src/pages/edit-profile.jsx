@@ -153,7 +153,7 @@ function EditProfile() {
     <div className="container my-5">
       <h2 className="text-center mb-4">Edit Profile</h2>
       <div className="card shadow-sm p-4">
-        <div className="col-md-4 d-flex justify-content-center">
+        <div className="col-md-4 d-flex justify-content-center m-auto mb-5">
           <img
             src={previewImage}
             alt="Profile"

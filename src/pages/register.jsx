@@ -117,7 +117,7 @@ function Register() {
       >
         <h1 className="mb-3 fw-bolder text-center">Register</h1>
         {error && <div className="alert alert-danger text-center">{error}</div>}
-        <div className="container col-4 col-lg-3 my-5 position-relative">
+        <div className="container col-12 col-sm-8 col-md-4 col-lg-3 my-5 position-relative">
           <img
             src={
               formData.profileImage
@@ -144,8 +144,8 @@ function Register() {
             onChange={handleImageChange}
           />
         </div>
-        <div className="d-flex">
-          <div className="col-6 pe-2">
+        <div className="row">
+          <div className="col-12 col-sm-6 pe-sm-2">
             <div className="form-floating mb-3">
               <input
                 type="text"
@@ -180,7 +180,7 @@ function Register() {
               <label>Address</label>
             </div>
           </div>
-          <div className="col-6 ps-2">
+          <div className="col-12 col-sm-6 ps-sm-2">
             <div className="form-floating mb-3">
               <input
                 type="text"

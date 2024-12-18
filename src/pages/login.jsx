@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useGoogleLogin } from "@react-oauth/google";
+import { TailSpin } from "react-loader-spinner";
 
 function Login() {
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
     showConfirmButton: false,
-    timer: 3000,
+    timer: 2000,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
@@ -34,6 +37,14 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!formData.email && !formData.password ) {
+      Toast.fire({
+        icon:"error",
+        title: "Fill Fields",
+      });
+      return;
+    }
+    setLoading(true);
     try {
       const response = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -43,7 +54,7 @@ function Login() {
           password: formData.password,
         }),
       });
-
+      setLoading(false);
       if (response.ok) {
         const token = await response.text();
         localStorage.setItem("jwtToken", token);
@@ -60,21 +71,24 @@ function Login() {
         });
       }
     } catch (error) {
+      setLoading(false);
       console.error("Error during login:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Connection Error",
+        text: "Unable to connect to the server. Please try again later.",
+      });
     }
   };
   async function loginViaSocialMedia(dataForSend) {
     try {
-      const result = await fetch(
-        `${API_URL}/login-via-social-media`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataForSend),
-        }
-      );
+      const result = await fetch(`${API_URL}/login-via-social-media`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataForSend),
+      });
       if (result.ok) {
         const token = await result.text();
         localStorage.setItem("jwtToken", token);
@@ -92,10 +106,17 @@ function Login() {
       }
     } catch (error) {
       console.error("Error during request:", error);
+      setLoading(false);
+      console.error("Error during login:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Connection Error",
+        text: "Unable to connect to the server. Please try again later.",
+      });
     }
   }
   const login = useGoogleLogin({
-    onSuccess: async (response) => {     
+    onSuccess: async (response) => {
       try {
         const res = await fetch(
           "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -145,7 +166,6 @@ function Login() {
       >
         <form className="col-7 bg-body-secondary p-3 rounded-3">
           <h1 className="mb-3 fw-bolder">Sign in</h1>
-
           <div className="form-floating mb-3">
             <input
               type="email"
@@ -182,9 +202,15 @@ function Login() {
               Remember me
             </label>
           </div>
-          <button className="btn btn-primary w-100 py-2" onClick={handleSubmit}>
-            Sign in
-          </button>
+          {loading ? (
+            <div className="d-flex justify-content-center">
+              <TailSpin height={50} width={50} color="#007BFF" />
+            </div>
+          ) : (
+            <button className="btn btn-primary w-100 py-2" onClick={handleSubmit}>
+              Sign in
+            </button>
+          )}
           <div className="mt-3 row">
             <div className="col-12 col-sm-6">
               <a className="btn btn-light w-100" onClick={() => login()}>
