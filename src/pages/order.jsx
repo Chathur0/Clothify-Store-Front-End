@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
+import Footer from "../component/footer";
 
 function Order() {
   const API_URL = import.meta.env.VITE_API_URL
@@ -263,6 +264,7 @@ function Order() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

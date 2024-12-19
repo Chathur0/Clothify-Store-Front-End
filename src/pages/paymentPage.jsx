@@ -76,51 +76,7 @@ const PaymentPage = () => {
 
   async function paymentGateWay() {
     payhere.onCompleted = async function onCompleted(orderId) {
-      const payload = {
-        cart: cart.map((item) => ({
-          productId: item.id,
-          quantity: item.sQty,
-          price: item.sQty * item.price,
-        })),
-        totalCost: totalCost,
-        customer: customer,
-      };
-
-      try {
-        const response = await fetch(`${API_URL}/buy-products`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (response.ok) {
-          Toast.fire({
-            icon: "success",
-            title: `Payment Successful! ${await response.text()}`,
-          });
-          clearCart();
-          navigate(`/`);
-        } else {
-          console.error("Error from server:", response.status);
-          Swal.fire({
-            icon: "warning",
-            text:"Contact Us",
-            title: "Payment Successful, but there was an issue saving your order.",
-            footer: "+94 - 000000000"
-          });
-        }
-      } catch (error) {
-        console.error("Error sending data to backend:", error);
-        Swal.fire({
-          icon: "warning",
-          text:"Contact Us",
-          title: "Payment Successful, but an error occurred while processing your order.",
-          footer: "+94 - 000000000"
-        });
-      }
+      
     };
 
     payhere.onDismissed = function onDismissed() {
@@ -172,6 +128,53 @@ const PaymentPage = () => {
     };
     payhere.startPayment(payment);
   }
+  async function placeOrder(){
+    const payload = {
+      cart: cart.map((item) => ({
+        productId: item.id,
+        quantity: item.sQty,
+        price: item.sQty * item.price,
+      })),
+      totalCost: totalCost,
+      customer: customer,
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/buy-products`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        Toast.fire({
+          icon: "success",
+          title: `Payment Successful! ${await response.text()}`,
+        });
+        clearCart();
+        navigate(`/`);
+      } else {
+        console.error("Error from server:", response.status);
+        Swal.fire({
+          icon: "warning",
+          text:"Contact Us",
+          title: "Payment Successful, but there was an issue saving your order.",
+          footer: "+94 - 000000000"
+        });
+      }
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+      Swal.fire({
+        icon: "warning",
+        text:"Contact Us",
+        title: "Payment Successful, but an error occurred while processing your order.",
+        footer: "+94 - 000000000"
+      });
+    }
+  }
   return (
     <div className="container mt-5">
       <h2>Invoice</h2>
@@ -201,6 +204,7 @@ const PaymentPage = () => {
       <button className="btn btn-primary mt-3" onClick={paymentGateWay}>
         Pay Now
       </button>
+      <button className="btn btn-danger" onClick={placeOrder}>Only for testing</button>
     </div>
   );
 };

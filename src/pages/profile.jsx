@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrashAlt, FaClipboardList } from "react-icons/fa";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
+import Footer from "../component/footer";
 
 function CustomerProfile() {
   const API_URL = import.meta.env.VITE_API_URL
@@ -326,6 +327,7 @@ function CustomerProfile() {
           </div>
         </div>
       )}
+      <Footer/>
     </>
   );
 }

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
+import  Button  from "/button.png";
 
 function NavigationBar(props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className=" navbar navbar-expand-lg bg-body-tertiary p">
         <div className="container">
-          <Link to={`/`} className="navbar-brand fw-bolder fs-1">
-            Clothify Store
+          <Link to={`/`} className="navbar-brand fw-bolder fs-1 col-8 col-sm-6 col-md-4 col-lg-3">
+            <img src={Button} alt="Home Logo" className="w-100"/>
           </Link>
           <button
             className="navbar-toggler"

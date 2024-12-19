@@ -7,6 +7,8 @@ import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import banner from "/banner_images/baby.jpg";
 import Swal from "sweetalert2";
+import Footer from "../component/footer";
+import style from "./product.module.css"
 
 function BabyProducts() {
   const API_URL = import.meta.env.VITE_API_URL
@@ -118,12 +120,12 @@ function BabyProducts() {
                 className="col-12 col-sm-6 col-md-4 col-lg-3 my-4"
                 key={product.id}
               >
-                <div className="card h-100 position-relative">
+                <div className={`card h-100 position-relative ${style.productContainer}`}>
                   <img
                     src={product.image}
                     className="card-img-top"
                     alt={product.name}
-                    style={{ height: "200px", objectFit: "cover" }}
+                    style={{ height: "300px", objectFit: "cover" }}
                   />
                   <div className="card-body">
                     <Link
@@ -192,6 +194,7 @@ function BabyProducts() {
 
         <CartPopup show={showCart} onClose={() => setShowCart(false)} />
       </div>
+      <Footer/>
     </>
   );
 }

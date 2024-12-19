@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css";
+import Footer from "../component/footer";
 
 Modal.setAppElement("#root");
 
@@ -460,6 +461,7 @@ const ProductDetails = () => {
           <p>Loading...</p>
         )}
       </Modal>
+      <Footer/>
     </>
   );
 };

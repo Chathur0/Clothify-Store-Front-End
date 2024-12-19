@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css";
+import Footer from "../component/footer";
 
 function AddProduct() {
   const API_URL = import.meta.env.VITE_API_URL
@@ -271,6 +272,7 @@ function AddProduct() {
           </form>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
+import Footer from "../component/footer";
 
 function AdminDashboard() {
   const API_URL = import.meta.env.VITE_API_URL
@@ -187,6 +188,7 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
