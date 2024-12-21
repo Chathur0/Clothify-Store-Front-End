@@ -13,6 +13,7 @@ import PaymentPage from "./pages/paymentPage";
 import Order from "./pages/order";
 import CheckConnection from "./component/CheckConnection";
 import PrivacyPolicy from "./pages/privacyPolicy";
+import TermsOfService from "./pages/termsOfService";
 function App() {
   return (
     <CheckConnection>
@@ -31,6 +32,7 @@ function App() {
             <Route path={`/payment`} element={<PaymentPage />} />
             <Route path={`/order`} element={<Order />} />
             <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
+            <Route path={"/terms-of-service"} element={<TermsOfService/>}/>
           </Routes>
         </Router>
       </CartProvider>

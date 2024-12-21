@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import logo from "/logo.png";
 import { Link } from "react-router-dom";
+import style from "./footer.module.css"
 
 function Footer() {
   return (
@@ -89,7 +90,10 @@ function Footer() {
 
             <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
               <p>&copy; 2024 Clothify Store, Inc. All rights reserved.</p>
-              <Link to={"/privacy-policy"} className="text-decoration-none text-dark">Privacy Policy</Link>
+              <div className="d-flex gap-2">
+              <Link to={"/privacy-policy"} className={style.textHover}>Privacy Policy</Link>
+              <Link to={"/terms-of-service"} className={style.textHover}>Terms Of Service</Link>
+              </div>
             </div>
           </footer>
         </div>

@@ -1,0 +1,7 @@
+.textHover {
+  text-decoration: none;
+  color: black;
+}
+.textHover:hover {
+  color: #3b71ca;
+}
