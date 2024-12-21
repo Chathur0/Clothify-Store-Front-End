@@ -6,6 +6,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import logo from "/logo.png";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -88,29 +89,7 @@ function Footer() {
 
             <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
               <p>&copy; 2024 Clothify Store, Inc. All rights reserved.</p>
-              <ul className="list-unstyled d-flex">
-                <li className="ms-3">
-                  <a className="link-body-emphasis" href="#">
-                    <svg className="bi" width="24" height="24">
-                      <use xlinkHref="#twitter" />
-                    </svg>
-                  </a>
-                </li>
-                <li className="ms-3">
-                  <a className="link-body-emphasis" href="#">
-                    <svg className="bi" width="24" height="24">
-                      <use xlinkHref="#instagram" />
-                    </svg>
-                  </a>
-                </li>
-                <li className="ms-3">
-                  <a className="link-body-emphasis" href="#">
-                    <svg className="bi" width="24" height="24">
-                      <use xlinkHref="#facebook" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
+              <Link to={"/privacy-policy"} className="text-decoration-none text-dark">Privacy Policy</Link>
             </div>
           </footer>
         </div>

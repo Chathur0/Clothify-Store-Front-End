@@ -12,7 +12,7 @@ import ProductDetails from "./pages/productDetails";
 import PaymentPage from "./pages/paymentPage";
 import Order from "./pages/order";
 import CheckConnection from "./component/CheckConnection";
-
+import PrivacyPolicy from "./pages/privacyPolicy";
 function App() {
   return (
     <CheckConnection>
@@ -30,6 +30,7 @@ function App() {
             <Route path={`/product/:id`} element={<ProductDetails />} />
             <Route path={`/payment`} element={<PaymentPage />} />
             <Route path={`/order`} element={<Order />} />
+            <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
           </Routes>
         </Router>
       </CartProvider>

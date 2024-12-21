@@ -1,0 +1,22 @@
+.responsiveLogo {
+    width: 10%;
+  }
+  
+  @media (max-width: 992px) {
+    .responsiveLogo {
+      width: 20%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .responsiveLogo {
+      width: 30%;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .responsiveLogo {
+      width: 50%;
+    }
+  }
+  
