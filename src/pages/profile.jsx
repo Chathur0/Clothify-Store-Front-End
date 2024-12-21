@@ -4,9 +4,10 @@ import { FaEdit, FaTrashAlt, FaClipboardList } from "react-icons/fa";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 import Footer from "../component/footer";
+import Loading from "../component/Loading";
 
 function CustomerProfile() {
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(null);
   const [userRole, setUserRole] = useState("");
@@ -78,7 +79,7 @@ function CustomerProfile() {
           });
           if (response.ok) {
             const customerData = await response.json();
-            setCustomer(customerData);  
+            setCustomer(customerData);
           } else {
             console.error("Error fetching customer details");
           }
@@ -102,15 +103,12 @@ function CustomerProfile() {
     });
     if (result.isConfirmed) {
       try {
-        const response = await fetch(
-          `${API_URL}/delete-user/${customer.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_URL}/delete-user/${customer.id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        });
         if (response.ok) {
           Swal.fire({
             title: "Deleted!",
@@ -179,9 +177,7 @@ function CustomerProfile() {
   const toggleOrderModal = () => {
     setShowOrderModal(!showOrderModal);
   };
-  if (!customer) {
-    return <div>Loading...</div>;
-  }
+
   return (
     <>
       <NavigationBar
@@ -191,65 +187,70 @@ function CustomerProfile() {
       ></NavigationBar>
       <div className="container my-5">
         <h2 className="text-center mb-4">Customer Profile</h2>
-
         <div className="card shadow-sm p-4">
-          <div className="row">
-            <div className="col-md-4 d-flex justify-content-center">
-              <img
-                src={
-                  customer.image ||
-                  "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
-                }
-                alt="Profile"
-                className="rounded-circle"
-                width="150"
-                height="150"
-              />
-            </div>
+          {!customer ? (
+            <Loading />
+          ) : (
+            <>
+              <div className="row">
+                <div className="col-md-4 d-flex justify-content-center">
+                  <img
+                    src={
+                      customer.image ||
+                      "https://cdn-icons-png.flaticon.com/512/1999/1999625.png"
+                    }
+                    alt="Profile"
+                    className="rounded-circle"
+                    width="150"
+                    height="150"
+                  />
+                </div>
 
-            <div className="col-md-8 mt-5 mt-md-0">
-              <div className="mb-3">
-                <strong>Name:</strong>{" "}
-                {customer.fname +
-                  " " +
-                  (customer.lname != null ? customer.lname : "")}
-              </div>
-              <div className="mb-3">
-                <strong>Email:</strong> {customer.email}
-              </div>
-              <div className="mb-3">
-                <strong>Phone:</strong> {customer.number}
-              </div>
-              <div className="mb-3">
-                <strong>Address:</strong> {customer.address}
-              </div>
+                <div className="col-md-8 mt-5 mt-md-0">
+                  <div className="mb-3">
+                    <strong>Name:</strong>{" "}
+                    {customer.fname +
+                      " " +
+                      (customer.lname != null ? customer.lname : "")}
+                  </div>
+                  <div className="mb-3">
+                    <strong>Email:</strong> {customer.email}
+                  </div>
+                  <div className="mb-3">
+                    <strong>Phone:</strong> {customer.number}
+                  </div>
+                  <div className="mb-3">
+                    <strong>Address:</strong> {customer.address}
+                  </div>
 
-              <div className="d-flex justify-content-start mt-4 row">
-                <button
-                  onClick={handleEditProfile}
-                  className="btn btn-primary me-3 col mt-3 mt-sm-0"
-                >
-                  <FaEdit /> Edit Profile
-                </button>
-                {orderHistory && orderHistory.length != 0 && (
-                  <button
-                    className="btn btn-secondary me-3 col mt-3 mt-sm-0"
-                    onClick={toggleOrderModal}
-                  >
-                    <FaClipboardList /> Order History
-                  </button>
-                )}
-                {userRole !== "admin" && (
-                  <button
-                    onClick={handleDeleteAccount}
-                    className="btn btn-danger col mt-3 mt-sm-0"
-                  >
-                    <FaTrashAlt /> Delete Account
-                  </button>
-                )}
+                  <div className="d-flex justify-content-start mt-4 row">
+                    <button
+                      onClick={handleEditProfile}
+                      className="btn btn-primary me-3 col mt-3 mt-sm-0"
+                    >
+                      <FaEdit /> Edit Profile
+                    </button>
+                    {orderHistory && orderHistory.length != 0 && (
+                      <button
+                        className="btn btn-secondary me-3 col mt-3 mt-sm-0"
+                        onClick={toggleOrderModal}
+                      >
+                        <FaClipboardList /> Order History
+                      </button>
+                    )}
+                    {userRole !== "admin" && (
+                      <button
+                        onClick={handleDeleteAccount}
+                        className="btn btn-danger col mt-3 mt-sm-0"
+                      >
+                        <FaTrashAlt /> Delete Account
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
       {showOrderModal && (
@@ -327,7 +328,7 @@ function CustomerProfile() {
           </div>
         </div>
       )}
-      <Footer/>
+      <Footer />
     </>
   );
 }

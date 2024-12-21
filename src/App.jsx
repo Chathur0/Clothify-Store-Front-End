@@ -6,19 +6,14 @@ import CustomerProfile from "./pages/profile";
 import EditProfile from "./pages/edit-profile";
 import AdminDashboard from "./pages/adminDashboard";
 import AddProduct from "./pages/addProducts";
-import MenPage from "./pages/MenPage";
-import WomenProduct from "./pages/womenProducts";
 import { CartProvider } from "./context/CartContext";
-import KidsProduct from "./pages/kidsProduct";
-import BabyProducts from "./pages/babyProducts";
+import ProductPage from "./pages/ProductPage";
 import ProductDetails from "./pages/productDetails";
 import PaymentPage from "./pages/paymentPage";
 import Order from "./pages/order";
 import CheckConnection from "./component/CheckConnection";
 
 function App() {
-  const basePath = "/Clothify-Store-Front-End";
-
   return (
     <CheckConnection>
       <CartProvider>
@@ -31,10 +26,7 @@ function App() {
             <Route path={`/edit-profile`} element={<EditProfile />} />
             <Route path={`/dashboard`} element={<AdminDashboard />} />
             <Route path={`/add-product`} element={<AddProduct />} />
-            <Route path={`/men-product`} element={<MenPage />} />
-            <Route path={`/women-product`} element={<WomenProduct />} />
-            <Route path={`/kids-product`} element={<KidsProduct />} />
-            <Route path={`/baby-product`} element={<BabyProducts />} />
+            <Route path={`/products/:category`} element={<ProductPage />} />
             <Route path={`/product/:id`} element={<ProductDetails />} />
             <Route path={`/payment`} element={<PaymentPage />} />
             <Route path={`/order`} element={<Order />} />

@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import styles from "./alertStyles.module.css"
+import styles from "./alertStyles.module.css";
+import { TailSpin } from "react-loader-spinner";
 function Register() {
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -39,7 +41,7 @@ function Register() {
         text: "File size should not exceed 5MB!",
         icon: "warning",
         customClass: {
-          popup: styles.dangerBackground, 
+          popup: styles.dangerBackground,
         },
       });
       e.target.value = "";
@@ -82,11 +84,12 @@ function Register() {
     }
 
     try {
+      setLoading(true);
       const response = await fetch(`${API_URL}/add-customer`, {
         method: "POST",
         body: formDataToSend,
       });
-
+      setLoading(true);
       if (response.ok) {
         Toast.fire({
           icon: "success",
@@ -95,7 +98,7 @@ function Register() {
         navigate(`/login`, {
           state: { email: formData.email, password: formData.password },
         });
-      } else {     
+      } else {
         Swal.fire({
           text: await response.text(),
           icon: "error",
@@ -103,6 +106,8 @@ function Register() {
       }
     } catch (error) {
       console.error("Error while sending request", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -216,10 +221,15 @@ function Register() {
             </div>
           </div>
         </div>
-
-        <button className="btn btn-primary w-100 py-2" type="submit">
-          Register
-        </button>
+        {loading ? (
+          <div className="d-flex justify-content-center">
+            <TailSpin height={50} width={50} color="#007BFF" />
+          </div>
+        ) : (
+          <button className="btn btn-primary w-100 py-2" type="submit">
+            Register
+          </button>
+        )}
         <div className="mt-3 d-flex gap-3 justify-content-center">
           <p>Already have an account?</p>
           <Link to="/login" className="text-decoration-none">

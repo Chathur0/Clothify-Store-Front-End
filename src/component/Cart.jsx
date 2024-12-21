@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const CartPopup = ({ show, onClose }) => {
+  const [selectedSize, setSelectedSize] = useState("");
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -55,6 +56,23 @@ const CartPopup = ({ show, onClose }) => {
                   <div>
                     <h5>{item.name}</h5>
                     <p>Rs {(item.sQty * item.price).toFixed(2)}</p>
+                    <select
+                    value={selectedSize}
+                    onChange={(e) => setSelectedSize(e.target.value)}
+                    className="form-select mb-3"
+                    style={{ width: "80px" }}
+                  >
+                    <option value="" disabled>
+                      Size
+                    </option>
+                    <option value="xs">XS</option>
+                    <option value="s">S</option>
+                    <option value="m">M</option>
+                    <option value="l">L</option>
+                    <option value="xl">XL</option>
+                    <option value="2xl">2XL</option>
+                    <option value="3xl">3XL</option>
+                  </select>
                     <div className="d-flex align-items-center">
                       <button
                         className="btn btn-sm btn-outline-secondary me-2"

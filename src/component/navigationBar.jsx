@@ -23,17 +23,17 @@ function NavigationBar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav mx-auto">
-              <Link to={`/women-product`} className="nav-link fw-bolder">
-                Women
-              </Link>
-              <Link to={`/men-product`} className="nav-link fw-bolder">
+              <Link to={`/products/1`} className="nav-link fw-bolder">
                 Men
               </Link>
-              <Link to={`/baby-product`} className="nav-link fw-bolder">
-                Baby
+              <Link to={`/products/2`} className="nav-link fw-bolder">
+                Women
               </Link>
-              <Link to={`/kids-product`} className="nav-link fw-bolder">
+              <Link to={`/products/3`} className="nav-link fw-bolder">
                 Kids
+              </Link>
+              <Link to={`/products/4`} className="nav-link fw-bolder">
+                Baby
               </Link>
             </div>
 

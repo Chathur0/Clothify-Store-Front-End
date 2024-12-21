@@ -5,12 +5,13 @@ import Swal from "sweetalert2";
 import Footer from "../component/footer";
 
 function AdminDashboard() {
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [orders, setOrders] = useState([]);
   const [filterNumber, setFilterNumber] = useState("");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -44,7 +45,7 @@ function AdminDashboard() {
           const errorData = await response.json();
           if (errorData.error === "Token has expired") {
             Swal.fire({
-              icon:"error",
+              icon: "error",
               title: "Session expired",
               text: "Logging out...",
               timer: 2000,
@@ -56,7 +57,7 @@ function AdminDashboard() {
                 setIsLoggedIn(false);
                 navigate(`/login`);
               },
-            });           
+            });
           } else {
             console.error("Authorization error:", errorData.error);
             setIsLoggedIn(false);
@@ -73,6 +74,7 @@ function AdminDashboard() {
 
     const fetchOrders = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`${API_URL}/get-orders`, {
           method: "GET",
           headers: {
@@ -88,6 +90,8 @@ function AdminDashboard() {
         }
       } catch (error) {
         console.error("Error during fetch:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -96,7 +100,7 @@ function AdminDashboard() {
   }, [navigate]);
 
   const viewOrderDetails = (id) => {
-    navigate(`/order`, { state:  id  });
+    navigate(`/order`, { state: id });
   };
 
   const filteredOrders = orders.filter((order) =>
@@ -143,7 +147,13 @@ function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {filteredOrders.length > 0 ? (
+                {loading ? (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      Loading...
+                    </td>
+                  </tr>
+                ) : filteredOrders.length > 0 ? (
                   filteredOrders.map((order) => (
                     <tr key={order.orderId}>
                       <td>{order.orderId}</td>
@@ -188,7 +198,7 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

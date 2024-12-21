@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 import Footer from "../component/footer";
+import Loading from "../component/Loading";
 
 function Order() {
   const API_URL = import.meta.env.VITE_API_URL
@@ -164,7 +165,7 @@ function Order() {
     }
   };
 
-  if (!orderDetails) return <p>Loading...</p>;
+  if (!orderDetails) return <Loading/>;
 
   return (
     <>
@@ -243,7 +244,7 @@ function Order() {
           </div>
           <div className="card-body">
             <p>
-              <strong>Total Cost:</strong> ${orderDetails.cost}
+              <strong>Total Cost:</strong> LKR {orderDetails.cost}
             </p>
             <p>
               <strong>Date:</strong> {orderDetails.date}

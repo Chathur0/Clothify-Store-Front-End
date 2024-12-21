@@ -117,7 +117,7 @@ function Home() {
                   <button
                     className="btn btn-outline-dark fw-bolder"
                     onClick={() => {
-                      navigate(`/men-product`);
+                      navigate(`/products/1`);
                     }}
                   >
                     MORE INFO
@@ -152,7 +152,7 @@ function Home() {
                   <button
                     className="btn btn-outline-dark fw-bolder"
                     onClick={() => {
-                      navigate(`/women-product`);
+                      navigate(`/products/2`);
                     }}
                   >
                     MORE INFO
@@ -187,7 +187,7 @@ function Home() {
                   <button
                     className="btn btn-outline-dark fw-bolder"
                     onClick={() => {
-                      navigate(`/kids-product`);
+                      navigate(`/products/3`);
                     }}
                   >
                     MORE INFO
@@ -223,7 +223,7 @@ function Home() {
                   <button
                     className="btn btn-outline-dark fw-bolder"
                     onClick={() => {
-                      navigate(`/baby-product`);
+                      navigate(`/products/4`);
                     }}
                   >
                     MORE INFO

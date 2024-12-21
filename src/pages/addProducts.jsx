@@ -4,9 +4,10 @@ import NavigationBar from "../component/navigationBar";
 import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css";
 import Footer from "../component/footer";
+import { TailSpin } from "react-loader-spinner";
 
 function AddProduct() {
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -19,6 +20,7 @@ function AddProduct() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -128,7 +130,7 @@ function AddProduct() {
       })
     );
     formDataToSend.append("image", formData.image);
-
+    setLoading(true);
     try {
       const response = await fetch(`${API_URL}/add-product`, {
         method: "POST",
@@ -137,7 +139,7 @@ function AddProduct() {
         },
         body: formDataToSend,
       });
-
+      setLoading(false);
       if (response.ok) {
         Toast.fire({
           icon: "success",
@@ -151,6 +153,7 @@ function AddProduct() {
         });
       }
     } catch (error) {
+      setLoading(false);
       Swal.fire({
         text: "An error occurred while submitting the product.",
         icon: "error",
@@ -265,14 +268,19 @@ function AddProduct() {
                 required
               />
             </div>
-
-            <button type="submit" className="btn btn-primary">
-              Add Product
-            </button>
+            {loading ? (
+              <div>
+                <TailSpin height={50} width={50} color="#007BFF" />
+              </div>
+            ) : (
+              <button type="submit" className="btn btn-primary">
+                Add Product
+              </button>
+            )}
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

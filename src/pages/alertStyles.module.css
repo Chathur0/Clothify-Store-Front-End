@@ -2,4 +2,23 @@
   background-color: #f8d7da !important;
   color: #721c24 !important;
 }
+.hoverText {
+  color: black;
+  text-decoration: none;
+}
+.hoverText:hover {
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+.productImage {
+  display: block;
+  max-height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.5s ease;
+}
 
+.productImage:hover {
+  transform: scale(1.1);
+}

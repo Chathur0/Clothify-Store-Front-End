@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { BsCart } from "react-icons/bs";
+import { BsCart, BsCash } from "react-icons/bs";
 import CartPopup from "../component/cart";
 import NavigationBar from "../component/navigationBar";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaSync, FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import styles from "./alertStyles.module.css";
 import Footer from "../component/footer";
-
+import logo from "/logo.png";
+import { BiBook } from "react-icons/bi";
+import { TbTruckDelivery } from "react-icons/tb";
+import Loading from "../component/Loading";
 Modal.setAppElement("#root");
 
 const ProductDetails = () => {
-  const API_URL = import.meta.env.VITE_API_URL
+  const [sampleProduct, setSampleProduct] = useState([logo, logo, logo]);
+
+  const API_URL = import.meta.env.VITE_API_URL;
   const [userRole, setUserRole] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState("");
@@ -27,6 +32,9 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [showCart, setShowCart] = useState(false);
   const { cartCount, addToCart } = useCart();
+  const [selectedSize, setSelectedSize] = useState("");
+  const [mainImage, setMainImage] = useState(sampleProduct[0]);
+
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -48,6 +56,10 @@ const ProductDetails = () => {
 
   const handleImageClick = () => {
     document.getElementById("imageInput").click();
+  };
+
+  const handleImagesClick = (image) => {
+    setMainImage(image);
   };
 
   const handleSaveChanges = async () => {
@@ -121,6 +133,16 @@ const ProductDetails = () => {
       }
     }
   };
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      Toast.fire({
+        icon: "warning",
+        title: "Please select a size before adding to the cart.",
+      });
+      return;
+    }
+    addToCart(product, 1);
+  };
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
@@ -189,6 +211,8 @@ const ProductDetails = () => {
         const response = await fetch(`${API_URL}/product/${id}`);
         const data = await response.json();
         setProduct(data);
+        setMainImage(data.image);
+        setSampleProduct([data.image, logo, logo]);
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
@@ -210,15 +234,12 @@ const ProductDetails = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(
-          `${API_URL}/delete-product/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_URL}/delete-product/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        });
         if (response.ok) {
           Swal.fire({
             icon: "success",
@@ -253,7 +274,7 @@ const ProductDetails = () => {
         profileImage={profileImage}
       ></NavigationBar>
       {!product ? (
-        <p className="text-center">Loading product details...</p>
+        <p className="text-center"><Loading/></p>
       ) : (
         <div className="container my-5 card">
           <div className="row">
@@ -357,18 +378,61 @@ const ProductDetails = () => {
               <>
                 <div className="col-md-6 my-3">
                   <img
-                    src={product.image}
+                    src={mainImage}
                     alt={product.name}
                     className="img-fluid w-100"
-                    style={{ maxHeight: "500px", objectFit: "cover" }}
+                    style={{ maxHeight: "600px", objectFit: "cover" }}
                     onClick={handleImageView}
                   />
                 </div>
-                <div className="col-md-6 mt-md-3">
-                  <h2>{product.name}</h2>
-                  <p>{product.description}</p>
-                  <h4>Price: RS {product.price.toFixed(2)}</h4>
-                  {userRole === "admin" ? (
+                <div className="col-md-3" id="image-section">
+                  <div className="row">
+                    {sampleProduct.map((image, index) => (
+                      <div className="col-4 col-md-12 card my-md-2 my-0 overflow-hidden">
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`Thumbnail ${index + 1}`}
+                          className={styles.productImage}
+                          onClick={() => handleImagesClick(image)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="col-md-3 mt-md-3">
+                  <h1 className="fw-bolder">{product.name}</h1>
+                  <p className="fw-semibold">{product.description}</p>
+                  <div className="mb-3">
+                    <BsCash size={20} /> Cash on Delivery <br />
+                    <FaSync /> Easy Exchange & Refund Policy <br />
+                    <TbTruckDelivery size={20} /> Island Wide Delivery
+                  </div>
+                  <h4 className="text-primary">
+                    LKR {product.price.toFixed(2)}
+                  </h4>
+                  <select
+                    value={selectedSize}
+                    onChange={(e) => setSelectedSize(e.target.value)}
+                    className="form-select mb-3"
+                    style={{ width: "80px" }}
+                  >
+                    <option value="" disabled>
+                      Size
+                    </option>
+                    <option value="xs">XS</option>
+                    <option value="s">S</option>
+                    <option value="m">M</option>
+                    <option value="l">L</option>
+                    <option value="xl">XL</option>
+                    <option value="2xl">2XL</option>
+                    <option value="3xl">3XL</option>
+                  </select>
+                  <Link className={styles.hoverText}>
+                    <BiBook /> Size Guide
+                  </Link>
+
+                  {userRole === "admin" && (
                     <div className="d-flex gap-2 gap-md-5">
                       <h5 className="">Available Quantity:</h5>
                       <div className="col-2">
@@ -386,14 +450,12 @@ const ProductDetails = () => {
                         />
                       </div>
                     </div>
-                  ) : (
-                    <h5 className="">Available Quantity: {product.qty}</h5>
                   )}
                   <div className="d-flex justify-content-between my-3">
                     <button
                       className="btn btn-primary"
                       disabled={product.qty === 0}
-                      onClick={() => addToCart(product, 1)}
+                      onClick={() => handleAddToCart()}
                     >
                       {product.qty === 0 ? "Sold Out" : "Add to Cart"}
                     </button>
@@ -448,20 +510,18 @@ const ProductDetails = () => {
 
       <CartPopup show={showCart} onClose={() => setShowCart(false)} />
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-        {product ? (
-          <>
-            <img
-              src={product.image}
-              alt={product.name}
-              className="img-fluid w-100"
-              style={{ maxWidth: "100%" }}
-            />
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
+        <button
+          onClick={closeModal}
+          className="btn btn-close position-absolute"
+        ></button>
+        <img
+          src={mainImage}
+          alt="Selected Product"
+          className="img-fluid w-100"
+          style={{ maxWidth: "100%" }}
+        />
       </Modal>
-      <Footer/>
+      <Footer />
     </>
   );
 };

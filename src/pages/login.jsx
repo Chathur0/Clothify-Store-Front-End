@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -37,9 +37,9 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!formData.email && !formData.password ) {
+    if (!formData.email && !formData.password) {
       Toast.fire({
-        icon:"error",
+        icon: "error",
         title: "Fill Fields",
       });
       return;
@@ -207,7 +207,10 @@ function Login() {
               <TailSpin height={50} width={50} color="#007BFF" />
             </div>
           ) : (
-            <button className="btn btn-primary w-100 py-2" onClick={handleSubmit}>
+            <button
+              className="btn btn-primary w-100 py-2"
+              onClick={handleSubmit}
+            >
               Sign in
             </button>
           )}

@@ -76,7 +76,7 @@ const PaymentPage = () => {
 
   async function paymentGateWay() {
     payhere.onCompleted = async function onCompleted(orderId) {
-      
+      placeOrder()
     };
 
     payhere.onDismissed = function onDismissed() {
@@ -193,18 +193,18 @@ const PaymentPage = () => {
               <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.sQty}</td>
-                <td>Rs {item.price.toFixed(2)}</td>
-                <td>Rs {(item.sQty * item.price).toFixed(2)}</td>
+                <td>LKR {item.price.toFixed(2)}</td>
+                <td>LKR {(item.sQty * item.price).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <h4 className="text-end">Total Cost: Rs {totalCost.toFixed(2)}</h4>
+      <h4 className="text-end">Total Cost: LKR {totalCost.toFixed(2)}</h4>
       <button className="btn btn-primary mt-3" onClick={paymentGateWay}>
         Pay Now
       </button>
-      <button className="btn btn-danger" onClick={placeOrder}>Only for testing</button>
+      <button className="btn btn-danger mt-3 ms-3" onClick={placeOrder}>Only for testing</button>
     </div>
   );
 };
